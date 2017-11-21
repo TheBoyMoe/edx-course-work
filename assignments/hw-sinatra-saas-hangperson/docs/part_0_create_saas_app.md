@@ -60,6 +60,10 @@ that were not listed in <code>Gemfile</code>?</summary>
   <p><blockquote>Bundler looked up the information for each Gem you requested (in this case, only <code>sinatra</code>) and realized that it depends on other gems, which in turn depend on still others, so it recursively installed all those dependencies.  For example, the <code>rack</code> appserver is a gem, and while you didn't explicitly request it, <code>sinatra</code> depends on it.  This is an example of the power of automation: rather than requiring you (the app developer) to understand every Gem dependency, Bundler automates that process and lets you focus only on your app's top-level dependencies.</blockquote></p>
 </details>
 
+The Gemfile.lock file stores a complete snapshot of every version of every gem your application uses. If you developed your app with Rails 4.1.6 and Rails 5.0 comes out, you don't want this new version to be pushed to your application during the next update. That is why it is also important to check your Gemfile.lock into source control with the rest of your application. The Gemfile.lock file not only stores exact version information, but bundler USES that version information to rebuild the snapshot on production. The Gemfile states what version numbers of a particular gem to use or are acceptable. The Gemfile.lock states which versions were actually used. Gemfile.lock is updated any time you add a new gem or update a gem in your Gemfile and run bundle install.
+
+Whenever updating a gem, if you get a warning that a previous version is already installed an to run the `bundle update [gem_name]`, always run bundle update specifying the particular gem. Running `bundle update` will rebuild the Gemfile.lock from scratch removing old gem versions with the latest ones allowed by the Gemfile.
+
 
 Create a simple SaaS app with Sinatra
 -------------------------------------
