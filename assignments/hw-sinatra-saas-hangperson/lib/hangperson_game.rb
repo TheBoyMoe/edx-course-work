@@ -24,16 +24,26 @@ class HangpersonGame
   # A 'POST' can only happen when the user submits an HTML form (or an AJAX request).
 
   def initialize(word)
-    @word = word.downcase
+    @word = word
     @guesses = ''
     @wrong_guesses = ''
   end
 
   # processes a guess and modifies the instance variables wrong_guesses and guesses
   def guess(letter)
+    # valid_letter(letter).downcase!
+    # if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
+    #   @word.include?(letter)? @guesses << letter : @wrong_guesses << letter
+    #   return true
+    # end
+    # return false
     valid_letter(letter).downcase!
     if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
-      @word.include?(letter)? @guesses << letter : @wrong_guesses << letter
+      if @word.include?(letter)
+        @guesses << letter
+      else
+        @wrong_guesses << letter
+      end
       return true
     end
     return false
@@ -48,12 +58,7 @@ class HangpersonGame
 
   # substitutes the correct guesses made so far into the word.
   def word_with_guesses
-    return '-' * @word.length unless @guesses.length > 0
-    # @word.split('').map do |letter|
-    #   if guess(letter)
-
-    #   end
-    # end.join('')
+    # return '-' * @word.length unless @guesses.length > 0
     current = ''
     @word.split('').each do |letter|
       if !@guesses.include? letter
@@ -85,11 +90,13 @@ class HangpersonGame
 
   private
     def valid_letter(letter)
-      if !letter || letter.empty? || /[^a-z]/i =~ letter
-        raise ArgumentError, 'Invalid letter'
-      else
-        letter
-      end
+      # if !letter || letter.empty? || /[^a-z]/i =~ letter
+      #   raise ArgumentError, 'Invalid letter'
+      # else
+      #   letter
+      # end
+      raise ArgumentError, 'Invalid letter' if !letter || letter.empty? || /[^\w]/i =~ letter
+      return letter
     end
 
 end
