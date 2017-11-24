@@ -14,6 +14,7 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    coderay (1.1.2)
     columnize (0.9.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -43,6 +44,7 @@ GEM
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -53,6 +55,9 @@ GEM
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     pkg-config (1.1.7)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -116,6 +121,7 @@ DEPENDENCIES
   cucumber (= 2.0.0)
   cucumber-sinatra (= 0.5.0)
   launchy (= 2.4.3)
+  pry
   rack-test (= 0.6.3)
   rack_session_access (= 0.1.1)
   rerun (= 0.10.0)
@@ -130,4 +136,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.12.5
+   1.16.0

@@ -31,19 +31,9 @@ class HangpersonGame
 
   # processes a guess and modifies the instance variables wrong_guesses and guesses
   def guess(letter)
-    # valid_letter(letter).downcase!
-    # if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
-    #   @word.include?(letter)? @guesses << letter : @wrong_guesses << letter
-    #   return true
-    # end
-    # return false
     valid_letter(letter).downcase!
     if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
-      if @word.include?(letter)
-        @guesses << letter
-      else
-        @wrong_guesses << letter
-      end
+      @word.include?(letter)? @guesses << letter : @wrong_guesses << letter
       return true
     end
     return false
@@ -51,8 +41,8 @@ class HangpersonGame
 
   # returns one of the symbols :win, :lose, or :play depending on the current game state
   def check_win_or_lose
-    return :lose if @wrong_guesses.length >= @word.length
-    return :win if @guesses.length >= @word.length
+    return :lose if @wrong_guesses.length >= 7
+    return :win if !word_with_guesses.empty? && !word_with_guesses.include?('-')
     :play
   end
 
@@ -90,13 +80,8 @@ class HangpersonGame
 
   private
     def valid_letter(letter)
-      # if !letter || letter.empty? || /[^a-z]/i =~ letter
-      #   raise ArgumentError, 'Invalid letter'
-      # else
-      #   letter
-      # end
-      raise ArgumentError, 'Invalid letter' if !letter || letter.empty? || /[^\w]/i =~ letter
-      return letter
+      raise ArgumentError, 'Invalid letter' if !letter || letter.empty? || /[^a-z]/i =~ letter
+      letter
     end
 
 end
