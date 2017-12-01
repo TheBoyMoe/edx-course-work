@@ -4,14 +4,16 @@
 %table#movies
   %thead
     %tr
-      %th= sort_link('title', 'Movies Title', 'title_header')
+      %th{class: ('title' == @column)? 'hilite' : ''}
+        = sort_link('title', 'Movies Title', 'title_header')
       %th Rating
-      %th= sort_link('release_date', 'Release Date', 'release_date_header')
+      %th{class: ('release_date' == @column)? 'hilite' : ''}
+        = sort_link('release_date', 'Release Date', 'release_date_header')
       %th More Info
   %tbody
     - @movies.each do |movie|
       %tr
-        %td= movie.title 
+        %td= movie.title
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)

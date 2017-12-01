@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.order("#{sort_column} #{sort_direction}")
+    @column = params[:column]
   end
 
   def new
@@ -48,12 +49,12 @@ class MoviesController < ApplicationController
       # define sortable columns
       ['title', 'release_date']
     end
-    
+
     def sort_column
       # sort the selected column, default 'title' where column not specified
       sortable_columns.include?(params[:column])? params[:column] : 'title'
     end
-    
+
     def sort_direction
       # sort either asc/desc, asc by default
       %w[asc desc].include?(params[:direction])? params[:direction] : 'asc'
