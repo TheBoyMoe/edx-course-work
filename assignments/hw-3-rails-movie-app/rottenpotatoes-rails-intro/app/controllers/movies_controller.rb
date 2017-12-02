@@ -18,17 +18,12 @@ class MoviesController < ApplicationController
 
     # filter movie list
     if params[:ratings]
-      @filter_items = params[:ratings].keys
-      @movies = Movie.where('rating IN (?)', @filter_items)
+      filter_items(params[:ratings])
     end
 
     # order 'title' & 'release_date' columns
-    if params[:sort] == 'title'
-      @movies = Movie.order('title ASC')
-      @highlight = 'title'
-    elsif params[:sort] == 'release_date'
-      @movies = Movie.order('release_date ASC')
-      @highlight = 'release_date'
+    if params[:sort]
+      sort_column(params[:sort])
     end
 
   end
@@ -60,5 +55,21 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
+
+  private
+    def sort_column(column)
+      if column == 'title'
+        @movies = Movie.order('title ASC')
+        @highlight = 'title'
+      elsif column == 'release_date'
+        @movies = Movie.order('release_date ASC')
+        @highlight = 'release_date'
+      end
+    end
+
+    def filter_items(ratings)
+      @filter_items = ratings.keys
+      @movies = Movie.where('rating IN (?)', @filter_items)
+    end
 
 end
