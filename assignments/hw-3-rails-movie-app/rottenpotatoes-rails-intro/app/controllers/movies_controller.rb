@@ -1,3 +1,4 @@
+require 'pry'
 class MoviesController < ApplicationController
   helper_method :sort_direction, :sort_column
 
@@ -14,6 +15,7 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.order("#{sort_column} #{sort_direction}")
     @column = params[:column]
+    @all_ratings = %w[G PG PG-13 R]
   end
 
   def new
