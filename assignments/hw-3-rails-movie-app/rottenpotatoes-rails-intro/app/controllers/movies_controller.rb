@@ -12,11 +12,11 @@ class MoviesController < ApplicationController
   end
 
   def index
-    # byebug
+    @filter_items = []
     if params[:ratings]
-      filter_items = params[:ratings].keys
-      @movies = Movie.where('rating IN (?)', filter_items).order("#{sort_column} #{sort_direction}")
-    else
+      @filter_items = params[:ratings].keys
+      @movies = Movie.where('rating IN (?)', @filter_items).order("#{sort_column} #{sort_direction}")
+    else 
       @movies = Movie.order("#{sort_column} #{sort_direction}")
     end
     @column = params[:column]
