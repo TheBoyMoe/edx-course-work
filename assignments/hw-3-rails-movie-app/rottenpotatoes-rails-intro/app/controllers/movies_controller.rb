@@ -15,15 +15,16 @@ class MoviesController < ApplicationController
     @filter_items = %w[G PG PG-13 R]
     @movies = Movie.all
     @all_ratings = Movie.get_ratings
+    session[:sort] = params[:sort] unless !params[:sort]
+    session[:ratings] = params[:ratings] unless !params[:ratings]
 
-    # filter movie list
-    if params[:ratings]
-      filter_items(params[:ratings])
-    end
-
-    # order 'title' & 'release_date' columns
-    if params[:sort]
-      sort_column(params[:sort])
+    # filter and sort column
+    if session[:sort] && session[:ratings]
+      filter_and_sort_column(session[:ratings], session[:sort])
+    elsif  session[:ratings]
+      filter_items(session[:ratings])
+    elsif session[:sort]
+      sort_column(session[:sort])
     end
 
   end
@@ -70,6 +71,17 @@ class MoviesController < ApplicationController
     def filter_items(ratings)
       @filter_items = ratings.keys
       @movies = Movie.where('rating IN (?)', @filter_items)
+    end
+
+    def filter_and_sort_column(ratings, column)
+      @filter_items = ratings.keys
+      if column == 'title'
+        @movies = Movie.where('rating IN (?)', @filter_items).order('title ASC')
+        @highlight = 'title'
+      elsif column == 'release_date'
+        @movies = Movie.where('rating IN (?)', @filter_items).order('release_date ASC')
+        @highlight = 'release_date'
+      end
     end
 
 end
