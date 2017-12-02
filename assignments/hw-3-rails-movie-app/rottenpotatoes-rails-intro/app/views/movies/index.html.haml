@@ -13,11 +13,9 @@
   %thead
     %tr
       %th{class: ('title' == @highlight)? 'hilite' : ''}
-        -# = sort_link('title', 'Movies Title', 'title_header')
         = link_to 'Movie Title', movies_path(sort: 'title'), id: 'title_header'
       %th Rating
       %th{class: ('release_date' == @highlight)? 'hilite' : ''}
-        -# = sort_link('release_date', 'Release Date', 'release_date_header')
         = link_to 'Release Date', movies_path(sort: 'release_date'), id: 'release_date'
       %th More Info
   %tbody
