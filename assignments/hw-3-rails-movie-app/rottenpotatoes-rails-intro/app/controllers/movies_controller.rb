@@ -12,15 +12,25 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @filter_items = []
+    @filter_items = %w[G PG PG-13 R]
+    @movies = Movie.all
+    @all_ratings = Movie.get_ratings
+
+    # filter movie list
     if params[:ratings]
       @filter_items = params[:ratings].keys
-      @movies = Movie.where('rating IN (?)', @filter_items).order("#{sort_column} #{sort_direction}")
-    else 
-      @movies = Movie.order("#{sort_column} #{sort_direction}")
+      @movies = Movie.where('rating IN (?)', @filter_items)
     end
-    @column = params[:column]
-    @all_ratings = Movie.get_ratings
+
+    # order 'title' & 'release_date' columns
+    if params[:sort] == 'title'
+      @movies = Movie.order('title ASC')
+      @highlight = 'title'
+    elsif params[:sort] == 'release_date'
+      @movies = Movie.order('release_date ASC')
+      @highlight = 'release_date'
+    end
+
   end
 
   def new
@@ -50,21 +60,5 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
-
-  private
-    def sortable_columns
-      # define sortable columns
-      ['title', 'release_date']
-    end
-
-    def sort_column
-      # sort the selected column, default 'title' where column not specified
-      sortable_columns.include?(params[:column])? params[:column] : 'title'
-    end
-
-    def sort_direction
-      # sort either asc/desc, asc by default
-      %w[asc desc].include?(params[:direction])? params[:direction] : 'asc'
-    end
 
 end
