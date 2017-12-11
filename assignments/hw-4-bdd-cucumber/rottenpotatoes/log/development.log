@@ -320,3 +320,6 @@ Processing by MoviesController#index as HTML
   [1m[36mMovie Load (0.6ms)[0m  [1mSELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('G', 'NC-17', 'PG', 'PG-13', 'R')  ORDER BY "movies"."title" ASC[0m
   Rendered movies/index.html.haml within layouts/application (8.7ms)
 Completed 200 OK in 27ms (Views: 25.6ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "movies" ("title", "created_at", "updated_at") VALUES (?, ?, ?)  [["title", "The Dark Knight"], ["created_at", "2017-12-11 15:44:16.359951"], ["updated_at", "2017-12-11 15:44:16.359951"]]
+  [1m[36m (65.5ms)[0m  [1mcommit transaction[0m

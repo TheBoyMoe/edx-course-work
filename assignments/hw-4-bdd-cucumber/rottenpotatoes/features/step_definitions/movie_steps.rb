@@ -18,8 +18,9 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  regex = /#{e1}.*#{e2}.*/m
+  regex = /#{e1}.*#{e2}.*/m # match across newlines
   expect(regex.match(page.body)).not_to eq nil
+  # page.body.should =~ regex
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -38,6 +39,15 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
       uncheck("ratings_#{rating}")
     end
   end
+
+  # list = rating_list.split(',')
+  # list.each do |item|
+  #   if uncheck
+  #     steps %{When I uncheck "ratings[#{item}]"}
+  #   else
+  #     steps %{When I check "ratings[#{item}]"}
+  #   end
+  # end
 end
 
 Then /I should see all the movies/ do
