@@ -2,9 +2,9 @@
 
 Feature: Describe the purpose of the feature
 
-  In order ....
-  As a .....
-  I want ....
+  In order .... [the value]
+  As a ..... [the role]
+  I want .... [the feature]
 
 2. define one or more scenarios
 
