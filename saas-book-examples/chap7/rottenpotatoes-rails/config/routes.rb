@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  root 'movies#index'
   resources :movies
+
+	root 'movies#index'
+
+  post '/movies/search_tmdb', to: 'movies#search_tmdb'
 
 end
