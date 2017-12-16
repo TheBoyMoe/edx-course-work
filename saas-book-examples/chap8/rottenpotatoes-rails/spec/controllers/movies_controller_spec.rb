@@ -22,18 +22,23 @@ describe MoviesController do
 			post :search_tmdb, {search_terms: 'hardware'}
 		end
 
-		# tests that the correct view is rendered
-		it "selects the Search Results template for rendering" do
-			allow(Movie).to receive(:find_in_tmdb).and_return(@fake_results)
-			post :search_tmdb, {search_terms: 'hardware'}
-			expect(response).to render_template('search_tmdb')
-		end
+		describe "after valid search" do # assumption tested by the 1st spec
 
-		# tests that the controller action assigns a value to @movies
-		it "makes the TMDb search results available to that template" do
-			allow(Movie).to receive(:find_in_tmdb).and_return(@fake_results)
-			post :search_tmdb, {search_terms: 'hardware'}
-			expect(assigns(:movies)).to eq(@fake_results)
+			before(:each) {
+				allow(Movie).to receive(:find_in_tmdb).and_return(@fake_results)
+				post :search_tmdb, {search_terms: 'hardware'}
+			}
+
+			# tests that the correct view is rendered
+			it "selects the Search Results template for rendering" do
+				expect(response).to render_template('search_tmdb')
+			end
+
+			# tests that the controller action assigns a value to @movies
+			it "makes the TMDb search results available to that template" do
+				expect(assigns(:movies)).to eq(@fake_results)
+			end
+
 		end
 
 	end
