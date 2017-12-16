@@ -4,6 +4,13 @@ class MoviesController < ApplicationController
     params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 
+  def search_movies
+    movie = Movie.find_by(id: params[:id])
+    @movies = Movie.where(director: movie.director)
+    render 'movies'
+  end
+
+
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID

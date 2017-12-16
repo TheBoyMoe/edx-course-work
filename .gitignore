@@ -5,3 +5,4 @@ assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/coverage/
 assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/tmp/
 assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/db/*.sqlite3
 assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/log/*.log
+assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/.byebug_history

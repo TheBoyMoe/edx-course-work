@@ -1,0 +1,7 @@
+%h1 Movies by "#{@movies.first.director}"
+
+%ul#details
+  - @movies.each do |movie|
+    %li
+      = movie.title
+
