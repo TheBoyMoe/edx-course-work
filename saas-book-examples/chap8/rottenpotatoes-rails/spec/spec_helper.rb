@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'byebug'
 require 'factory_girl_rails'
 
