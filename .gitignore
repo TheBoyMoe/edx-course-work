@@ -1,3 +1,7 @@
 .idea/
 assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/.env
 saas-book-examples/chap8/rottenpotatoes-rails/coverage/
+assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/coverage/
+assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/tmp/
+assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/db/*.sqlite3
+assignments/hw-5-acceptance-unit-test-cycle/rottenpotatoes/log/*.log
