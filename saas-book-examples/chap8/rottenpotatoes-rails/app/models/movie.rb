@@ -8,4 +8,8 @@ class Movie < ActiveRecord::Base
     # call the api
   end
 
+  def name_with_rating
+    "#{title} (#{rating})"
+  end
+
 end
