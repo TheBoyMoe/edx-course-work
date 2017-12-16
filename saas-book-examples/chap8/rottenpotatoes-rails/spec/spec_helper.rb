@@ -1,4 +1,5 @@
 require 'byebug'
+require 'factory_girl_rails'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -23,6 +24,9 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
-  end
-	
+	end
+
+	# Factory_Girl config
+  config.include FactoryGirl::Syntax::Methods
+
 end
