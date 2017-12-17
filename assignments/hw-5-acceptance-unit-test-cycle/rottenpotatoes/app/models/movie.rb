@@ -7,15 +7,12 @@ class Movie < ActiveRecord::Base
   end
 
   def self.find_similar_movies(id)
-
     movie = Movie.find_by(id: id)
     if !movie.director || movie.director.empty?
       raise Movie::DirectorNotFound
     end
 
     @movies = Movie.where(director: movie.director)
-
-    # [Movie.create(title: 'THX-1138', director: 'George Lucas')]
   end
 
 end
