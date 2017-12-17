@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
   end
 
   def search_movies
+    # TODO call Movie::Tmdb
     movie = Movie.find_by(id: params[:id])
     @movies = Movie.where(director: movie.director)
     render 'movies'
