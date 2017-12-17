@@ -4,11 +4,13 @@ class MoviesController < ApplicationController
     params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 
-  def search_movies
-    # TODO call Movie::Tmdb
-    movie = Movie.find_by(id: params[:id])
-    @movies = Movie.where(director: movie.director)
-    render 'movies'
+  def similar_movies
+    begin
+      @movies = Movie.find_similar_movies(params[:id])
+    rescue Movie::DirectorNotFound
+      flash[:warning] = "'#{Movie.find(params[:id]).title}' has no director info"
+      redirect_to movies_path
+    end
   end
 
 
