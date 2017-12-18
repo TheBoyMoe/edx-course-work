@@ -8,15 +8,14 @@ describe MoviesController do
 			# double('movie1', id: 2, title: 'Alien', director: 'Ridley Scott')
 			Movie.create(title: 'Blade Runner', director: 'Ridley Scott')
 			Movie.create(title: 'Alien', director: 'Ridley Scott')
-			@movies = Movie.all
+			@movies = Movie.all.to_a
 		}
 
 
 		context "movie has a defined director" do
 			before(:each){
-				movie = double('movie3', id: 3, director: 'Ridley Scott')
-				allow(Movie).to receive(:find_similar_movies).with(movie.id)
-				get :similar_movies_path, {id: movie.id}
+				expect(Movie).to receive(:find_similar_movies).with("1").and_return(@movies)
+				get :similar_movies, {id: 1}
 			}
 
 			it "it returns an array of similar movies" do
@@ -26,9 +25,9 @@ describe MoviesController do
 
 		context "movie does not have a director" do
 			before(:each){
-				movie = double('movie3', id: 3, title: 'Prometheus')
-				allow(Movie).to receive(:find_similar_movies).with(movie.id)
-				get :similar_movies_path, {id: movie.id}
+				movie = Movie.create(title: 'Prometheus')
+				expect(Movie).to receive(:find_similar_movies).with("3")
+				get :similar_movies, {id: movie.id}
 			}
 
 			it "redirect the user to the home page" do
@@ -42,20 +41,31 @@ describe MoviesController do
 
 	end
 
-	xdescribe "#index" do
 
+	describe "#create" do
+		it "creates a new movie" do
+			expect{
+				post :create, { movie: {title: 'Alien', director: 'Ridley Scott'}}
+			}.to change(Movie, :count).by(1)
+		end
 	end
 
-	xdescribe "#create" do
-
+	describe "#destroy" do
+		it "destroys a movie in the database" do
+			movie = Movie.create({title: 'Alien', director: 'Ridley Scott'})
+			expect{
+				post :destroy, {id: movie.id}
+			}.to change(Movie, :count).by(-1)
+		end
 	end
 
-	xdescribe "#update" do
+	# xdescribe "#index" do
+	#
+	# end
+	#
+	# xdescribe "#update" do
+	#
+	# end
 
-	end
-
-	xdescribe "#destroy" do
-
-	end
 
 end

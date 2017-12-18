@@ -12,7 +12,7 @@ class Movie < ActiveRecord::Base
       raise Movie::DirectorNotFound
     end
 
-    @movies = Movie.where(director: movie.director)
+    Movie.where(director: movie.director).to_a
   end
 
 end
