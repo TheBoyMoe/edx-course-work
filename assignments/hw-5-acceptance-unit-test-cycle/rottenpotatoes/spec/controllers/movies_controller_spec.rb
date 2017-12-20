@@ -18,29 +18,33 @@ describe MoviesController do
 				get :similar_movies, {id: 1}
 			}
 
-			it "it returns an array of similar movies" do
+			it "selects the similar movies template" do
+				expect(response).to render_template('similar_movies')
+			end
+
+			it "returns an array of similar movies" do
 				expect(assigns(:movies)).to eq(@movies)
 			end
 		end
 
 		context "movie does not have a director" do
 			before(:each){
-				movie = Movie.create(title: 'Prometheus')
-				expect(Movie).to receive(:find_similar_movies).with("3")
-				get :similar_movies, {id: movie.id}
+				@movie = Movie.create(title: 'Prometheus')
+				expect(Movie).to receive(:find_similar_movies).with("3").and_return(nil)
+				get :similar_movies, {id: @movie.id}
 			}
 
-			it "redirect the user to the home page" do
-				expect(response).to render_template('index')
+			xit "redirect the user to the home page" do
+				expect(response).to render_template('movies/index')
 			end
 
-			xit "returns a flash message to the user 'no director info'" do
-				expect(response.text).to eq("#{movie.title} has no director info")
+			it "fails to return a match" do
+				expect(assigns(:movies)).to eq(nil)
 			end
+
 		end
 
 	end
-
 
 	describe "#create" do
 		it "creates a new movie" do
@@ -58,14 +62,5 @@ describe MoviesController do
 			}.to change(Movie, :count).by(-1)
 		end
 	end
-
-	# xdescribe "#index" do
-	#
-	# end
-	#
-	# xdescribe "#update" do
-	#
-	# end
-
 
 end

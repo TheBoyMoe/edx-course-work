@@ -11,7 +11,6 @@ class Movie < ActiveRecord::Base
     if !movie.director || movie.director.empty?
       raise Movie::DirectorNotFound
     end
-
     Movie.where(director: movie.director).to_a
   end
 

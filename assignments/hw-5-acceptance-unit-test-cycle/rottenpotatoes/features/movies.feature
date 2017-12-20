@@ -32,3 +32,15 @@ Feature: search for movies by director
     When  I follow "Find Movies With Same Director"
     Then  I should be on the home page
     And   I should see "'Alien' has no director info"
+
+  Scenario: sort movies alphabetically
+    Given I am on the home page
+    When I follow "Movie Title"
+    Then I should see "Alien" before "Blade Runner"
+    And I should see "Star Wars" before "THX-1138"
+
+  Scenario: sort movies in increasing order of release date
+    Given I am on the home page
+    When I follow "Release Date"
+    Then I should see "THX-1138" before "Star Wars"
+    And I should see "Alien" before "Blade Runner"
