@@ -5,23 +5,21 @@ describe Movie do
 	describe "find movies by the same director" do
 
 		before(:each){
-			Movie.create(title: 'Blade Runner', director: 'Ridley Scott')
-			Movie.create(title: 'Alien', director: 'Ridley Scott')
+			@movie1 = Movie.create(title: 'Blade Runner', director: 'Ridley Scott')
+			@movie2 = Movie.create(title: 'Alien', director: 'Ridley Scott')
+			@movie3 = Movie.create(title: 'ET', director: "Steven Speilberg")
+			@movies = Movie.find_similar_movies(@movie1.id)
 		}
 
-		context "when a director is provided" do
-
-			it "returns similar movies when others are found"
-
+		it "returns similar movies by the same director" do
+			expect(@movies.any?{|m| m.director == "Ridley Scott"}).to be true
 		end
 
-		context "when no director is provided" do
-
-			it "raises an error" do
-
-			end
-
+		it "does not return movies by other directors" do
+			expect(@movies.any?{|m| m.director == "Steven Speilberg"}).to be false
 		end
+
+
 	end
 
 end

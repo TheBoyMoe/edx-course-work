@@ -30,16 +30,20 @@ describe MoviesController do
 		context "movie does not have a director" do
 			before(:each){
 				@movie = Movie.create(title: 'Prometheus')
-				expect(Movie).to receive(:find_similar_movies).with("3").and_return(nil)
+				expect(Movie).to receive(:find_similar_movies).with("3")
 				get :similar_movies, {id: @movie.id}
 			}
 
-			xit "redirect the user to the home page" do
-				expect(response).to render_template('movies/index')
+			it "redirect user to the movies page" do
+				expect(response).to redirect_to movies_path
 			end
 
-			it "fails to return a match" do
-				expect(assigns(:movies)).to eq(nil)
+			# it "fails to return a match" do
+			# 	expect(assigns(:movies)).to eq(nil)
+			# end
+
+			it "displays a message to the user: 'Prometheus has no director info'" do
+				expect(flash[:notice]).to eq("'#{@movie.title}' has no director info")
 			end
 
 		end

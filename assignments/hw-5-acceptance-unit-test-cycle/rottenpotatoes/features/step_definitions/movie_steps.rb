@@ -4,9 +4,10 @@ Given(/^the following movies exist:$/) do |table|
 	end
 end
 
-Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |arg1, arg2|
-	movie = Movie.find_by(title: arg1)
-	movie.director == arg2
+Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |movie, director|
+	# movie = Movie.find_by(title: arg1)
+	# movie.director == arg2
+	expect(page).to have_content(director)
 end
 
 Then /I should see "(.*)" before "(.*)"/ do |arg1, arg2|

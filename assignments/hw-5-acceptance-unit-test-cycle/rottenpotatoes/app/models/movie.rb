@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
 
-  class Movie::DirectorNotFound < StandardError; end
+  # class Movie::DirectorNotFound < StandardError; end
 
   def self.all_ratings
     %w(G PG PG-13 NC-17 R)
@@ -8,10 +8,14 @@ class Movie < ActiveRecord::Base
 
   def self.find_similar_movies(id)
     movie = Movie.find_by(id: id)
-    if !movie.director || movie.director.empty?
-      raise Movie::DirectorNotFound
-    end
+
+    # if !movie.director || movie.director.empty?
+    #   raise Movie::DirectorNotFound
+    # else
+
+    return if !movie.director || movie.director.empty?
     Movie.where(director: movie.director).to_a
+    # end
   end
 
 end
