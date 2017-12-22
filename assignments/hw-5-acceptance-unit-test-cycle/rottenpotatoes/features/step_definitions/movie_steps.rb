@@ -5,8 +5,6 @@ Given(/^the following movies exist:$/) do |table|
 end
 
 Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |movie, director|
-	# movie = Movie.find_by(title: arg1)
-	# movie.director == arg2
 	expect(page).to have_content(director)
 end
 

@@ -7,15 +7,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.find_similar_movies(id)
-    movie = Movie.find_by(id: id)
-
-    # if !movie.director || movie.director.empty?
-    #   raise Movie::DirectorNotFound
-    # else
-
-    return if !movie.director || movie.director.empty?
-    Movie.where(director: movie.director).to_a
-    # end
+    Movie.where(director: find(id).director)
   end
 
 end

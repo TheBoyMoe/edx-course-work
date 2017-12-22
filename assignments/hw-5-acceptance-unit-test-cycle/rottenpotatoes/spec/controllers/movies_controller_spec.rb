@@ -4,8 +4,6 @@ describe MoviesController do
 
 	describe "calls the model method that finds similar movies" do
 		before(:each) {
-			# double('movie1', id: 1, title: 'Blade Runner', director: 'Ridley Scott'),
-			# double('movie1', id: 2, title: 'Alien', director: 'Ridley Scott')
 			Movie.create(title: 'Blade Runner', director: 'Ridley Scott')
 			Movie.create(title: 'Alien', director: 'Ridley Scott')
 			@movies = Movie.all.to_a
@@ -14,7 +12,7 @@ describe MoviesController do
 
 		context "movie has a defined director" do
 			before(:each){
-				expect(Movie).to receive(:find_similar_movies).with("1").and_return(@movies)
+				expect(Movie).to receive(:find_similar_movies).with(1).and_return(@movies)
 				get :similar_movies, {id: 1}
 			}
 
@@ -30,17 +28,13 @@ describe MoviesController do
 		context "movie does not have a director" do
 			before(:each){
 				@movie = Movie.create(title: 'Prometheus')
-				expect(Movie).to receive(:find_similar_movies).with("3")
+				expect(Movie).to receive(:find_similar_movies).with(3)
 				get :similar_movies, {id: @movie.id}
 			}
 
 			it "redirect user to the movies page" do
 				expect(response).to redirect_to movies_path
 			end
-
-			# it "fails to return a match" do
-			# 	expect(assigns(:movies)).to eq(nil)
-			# end
 
 			it "displays a message to the user: 'Prometheus has no director info'" do
 				expect(flash[:notice]).to eq("'#{@movie.title}' has no director info")
