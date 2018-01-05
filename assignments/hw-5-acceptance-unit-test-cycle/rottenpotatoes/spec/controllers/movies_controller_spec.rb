@@ -4,16 +4,16 @@ describe MoviesController do
 
 	describe "calls the model method that finds similar movies" do
 		before(:each) {
-			Movie.create(title: 'Blade Runner', director: 'Ridley Scott')
-			Movie.create(title: 'Alien', director: 'Ridley Scott')
-			@movies = Movie.all.to_a
+			@movies = [Movie.create(title: 'Blade Runner', director: 'Ridley Scott'),
+			Movie.create(title: 'Alien', director: 'Ridley Scott')]
+			@movie = @movies[0]
 		}
 
 
 		context "movie has a defined director" do
 			before(:each){
-				expect(Movie).to receive(:find_similar_movies).with(1).and_return(@movies)
-				get :similar_movies, {id: 1}
+				expect(Movie).to receive(:find_similar_movies).with(@movie.id).and_return(@movies)
+				get :similar_movies, {id: @movie.id}
 			}
 
 			it "selects the similar movies template" do
@@ -28,7 +28,7 @@ describe MoviesController do
 		context "movie does not have a director" do
 			before(:each){
 				@movie = Movie.create(title: 'Prometheus')
-				expect(Movie).to receive(:find_similar_movies).with(3)
+				expect(Movie).to receive(:find_similar_movies).with(@movie.id)
 				get :similar_movies, {id: @movie.id}
 			}
 
