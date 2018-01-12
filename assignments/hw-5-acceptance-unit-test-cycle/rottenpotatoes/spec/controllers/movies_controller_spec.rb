@@ -9,7 +9,23 @@ describe MoviesController do
 			@movie = @movies[0]
 		}
 
+		# UNIT test
+		context '#search_directors' do
+			describe 'movie has a director' do
+				# subject(:controller) { described_class.new }
+				subject { described_class.new }
+				it { is_expected.to respond_to :similar_movies }
+				# expect(MoviesController.new).to respond_to :search_directors
 
+				# integration test (route spec)
+				it 'responds to the search_directors route' do
+					# allow(Movie).to receive(:find_by_director)
+					get :similar_movies, {id: @movie.id}
+				end
+			end
+		end
+
+		# Theses are INTEGRATION tests
 		context "movie has a defined director" do
 			before(:each){
 				expect(Movie).to receive(:find_similar_movies).with(@movie.id).and_return(@movies)
