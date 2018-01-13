@@ -7,9 +7,12 @@ class Movie < ActiveRecord::Base
     Movie.all.map {|movie| movie.rating}.uniq
   end
 
-
   def name_with_rating
     "#{title} (#{rating})"
+  end
+
+  def self.find_in_tmdb(query)
+
   end
 
 end
