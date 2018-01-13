@@ -42,13 +42,16 @@ A user story should follow the SMART acronym
 Part of the BDD process is to propose sketches of the UI to match the user stories, e.g. sketch of the different screens a user would see in adding a movie to create a 'story board'. This is a quick and easy way to capture the interaction between the different pages depending on what the user does.
 
 
-## Cucumber
+### Cucumber
 
 Use Cucumber (together with Capybara and RSpec) testing frameworks to turn user stories into:
  'acceptance tests' - ensure customer gets what they want, and
- 'integration tests' - ensure different 
+ 'integration tests' - ensure different modules of the app communicate/work together.
+They also provide a series of 'regression' tests - helping to maintain the code as it evolves. 
  
-In cucumber each user story referes to a single feature, with one or more 'scenarios' - each scenario describing how the feature can be used - 'happy' and 'sad' paths. Each scenario is in turn composed of between 3 to 8 steps. Each step stating with a keyword, 'Given', 'Then', 'When', 'And' and 'But'.
+ Capybara simulates the user interacting with the page, Rspec provides the tests and matchers.
+ 
+In cucumber each user story refers to a single feature, with one or more 'scenarios' - each scenario describing how the feature can be used - 'happy' and 'sad' paths. Scenarios test the entire path through the app. Each scenario is in turn composed of between 3 to 8 steps. Each step stating with a keyword, 'Given', 'Then', 'When', 'And' and 'But'.
 	- Given - sets up some precondition, sets the current state, e.g. user is on a particular page
 	- When - a particular event/action occurs, e.g. user clicks on a link/button
 	- Then - the expected result, check if some condition is true, e.g a particular page is displayed
@@ -57,15 +60,54 @@ In cucumber each user story referes to a single feature, with one or more 'scena
 	
 ```text
 	Scenario: find movie with same director
-      Given I am on the details page for "Star Wars"
-      When  I follow "Find Movies With Same Director"
-      Then  I should be on the Similar Movies page for "Star Wars"
-      And   I should see "THX-1138"
-      But   I should not see "Blade Runner"
+		Given I am on the details page for "Star Wars"
+		When  I follow "Find Movies With Same Director"
+		Then  I should be on the Similar Movies page for "Star Wars"
+		And   I should see "THX-1138"
+		But   I should not see "Blade Runner"
 ```
 
 
 These steps are each tested by 'step definition' files - cucumber uses regex to match the text of a step to the matching test in the step definition file. The steps in the scenario are akin to method calls, and the steps in the step definition files are like the method definition.
 
-Capybara simulates the user interacting with the page, Rspec provides the tests and matchers.
+Falling tests are red, all tests after a failing test sre blue - indicating that they've not been run. Green indicates passing tests, yellow are tests that have not yet been implemented.
 
+
+#### Defining a feature
+
+1. define the feature
+
+Feature: Describe the purpose of the feature
+
+  In order ....
+  As a .....
+  I want ....
+
+2. define one or more cucumber scenarios
+
+Define some specific behaviour to define our feature - through creating one or more scenarios. There are 3 parts to each scenario - GIVEN, THEN and WHEN.
+GIVEN - sets up some precondition
+WHEN - typically involve simulating the user interacting with the app, e/g, clicking a button, filling in a field.
+THEN - usually checks to see if a condition is true
+AND - used to extend any WHEN or THEN step to create more complex scenarios
+
+3. run 'cucumber' from the command line
+
+4. define your steps in the steps_definitions file to get them all passing
+    - define you steps using regex - allows cucumber to parse your scenarios and call the matching step 
+
+e.g.
+
+Feature: Manage Articles
+
+  In order to make a blog
+  As an author
+  I want to create and manage articles
+
+  Scenario: Articles List
+    Given I have articles titled 'Pizza and Breadsticks'
+    When I go to the list of articles
+    Then I should see 'Pizza'
+    And I should see 'Breadsticks'
+ 
+ 
