@@ -6,7 +6,7 @@ describe MoviesController do
 	describe 'searching TMDb' do
 
 		before(:each){
-			# array of fake 'movies'
+			# array of fake 'movies' - do not respond to any of the movie methods
 			@fake_results = [double('movie1'), double('movie2')]
 		}
 
@@ -18,10 +18,12 @@ describe MoviesController do
 			# 	Movie.stub(:find_in_tmdb, @fake_results).with('hardware')
 			# }
 
-			# we expect the Movie class to receive the a call to '.find_in_tmdb', with param 'hardware' and return an array of movie objects
+			# we expect the Movie class to receive the a call to '.find_in_tmdb', with
+			# param 'hardware' and return an array of movie objects
 			# this fails in the first instance since movie#search_tmdb hasn't called Movie.find_in_tmbd
 			expect(Movie).to receive(:find_in_tmdb).with('hardware').and_return(@fake_results)
 			# calls the rspec 'post' method, passing the action and the params hash as args
+			# simulates passing the search term from the form
 			post :search_tmdb, {search_terms: 'hardware'}
 		end
 
