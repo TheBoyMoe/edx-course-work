@@ -8,7 +8,8 @@ class Movie < ActiveRecord::Base
   end
 
   def self.find_in_tmdb(search_term)
-    # call the api - requires logic to raise an exception should an invalid api key be supplied
+    # themoviedb gem performs the http query and parses the JSON results into Ruby objects
+    # requires logic to raise an exception should an invalid api key be supplied
     begin
       Tmdb::Movie.find(search_term)
     rescue Tmdb::InvalidApiKeyError

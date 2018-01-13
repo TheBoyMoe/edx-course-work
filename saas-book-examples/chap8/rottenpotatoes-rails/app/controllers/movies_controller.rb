@@ -2,9 +2,11 @@ class MoviesController < ApplicationController
   helper_method :sort_direction, :sort_column
 
   def search_tmdb
+    # implementation from chp 7
     # flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
     # redirect_to movies_path
 
+    # calls a model method which performs the search
     @movies = Movie.find_in_tmdb(params[:search_terms])
   end
 
