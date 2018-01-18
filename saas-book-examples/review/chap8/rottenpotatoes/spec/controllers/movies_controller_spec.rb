@@ -21,6 +21,7 @@ describe MoviesController do
 		describe "after valid search" do # assumption tested by the 1st spec
 			before(:each){
 				allow(Movie).to receive(:find_in_tmdb).with('Alien').and_return(@fake_results)
+				# use rspec's 'post' method, 1st arg is the action, 2nd is a hash, becomes params hash
 				post :search_tmdb, {search_terms: 'Alien'}
 			}
 
