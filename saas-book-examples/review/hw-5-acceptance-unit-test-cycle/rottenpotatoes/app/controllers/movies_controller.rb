@@ -58,6 +58,9 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def search_directors
+    render :index
+  end
 
   private
 
