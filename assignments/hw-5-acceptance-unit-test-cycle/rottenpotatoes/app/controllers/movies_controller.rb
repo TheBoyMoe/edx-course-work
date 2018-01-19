@@ -1,18 +1,4 @@
 class MoviesController < ApplicationController
-  
-  def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
-  end
-
-  def similar_movies
-    movie = Movie.find(params[:id])
-    if !movie.director || movie.director.empty?
-      flash[:notice] = "'#{movie.title}' has no director info"
-      redirect_to movies_path
-    end
-    @movies = Movie.find_similar_movies(movie.id)
-  end
-
 
   def show
     id = params[:id] # retrieve movie ID from URI route
@@ -70,5 +56,21 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
+
+
+  def similar_movies
+    movie = Movie.find(params[:id])
+    if !movie.director || movie.director.empty?
+      flash[:notice] = "'#{movie.title}' has no director info"
+      redirect_to movies_path
+    end
+    @movies = Movie.find_similar_movies(movie.id)
+  end
+
+
+  private
+    def movie_params
+      params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
+    end
 
 end
