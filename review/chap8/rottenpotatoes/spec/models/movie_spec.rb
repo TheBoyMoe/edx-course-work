@@ -44,11 +44,27 @@ describe Movie do
 	describe "searching Tmdb by keyword" do
 
 		# happy path
-		it 'calls Tmdb with title keywords' do
-			# when we call '.find_in_tmdb' we expect it to call Tmdb::Movie.find with query
-			expect(Tmdb::Movie).to receive(:find).with('Inception')
-			Movie.find_in_tmdb('Inception')
+		context 'with a valid API key' do
+			it 'calls Tmdb with title keywords' do
+				# when we call '.find_in_tmdb' we expect it to call Tmdb::Movie.find with query
+				# the 'receive' call intercepts the call, so the real method is not called
+				expect(Tmdb::Movie).to receive(:find).with('Inception')
+				Movie.find_in_tmdb('Inception')
+			end
 		end
-	end
 
+		# sad path - raise an exception if an invalid or no API key is provided
+		# this spec will call the Tmdb service each time it is called - NOT ideal.
+		# We can fix this be introducing a seam that isolates the caller from the callee
+		context 'with an invalid key' do
+			it 'raises an InvalidKeyError' do
+				# we know that the call to '.find_in_tmdb' will raise an exception, so
+				# encapsulate it within a block otherwise the test will halt.
+				# Instead RSpec will catch the exception, an match it to our own
+				allow(Tmdb::Movie).to receive(:find).and_raise(Tmdb::InvalidApiKeyError)
+				expect {Movie.find_in_tmdb('Inception')}.to raise_error(Movie::InvalidKeyError)
+			end
+		end
+
+	end
 end

@@ -12,7 +12,12 @@ class Movie < ActiveRecord::Base
   end
 
   def self.find_in_tmdb(query)
-    Tmdb::Movie.find(query)
+    Tmdb::Api.key(ENV['API_KEY'])
+    begin
+      Tmdb::Movie.find(query)
+    rescue Tmdb::InvalidApiKeyError
+      raise Movie::InvalidKeyError, 'Invalid API key'
+    end
   end
 
 end
