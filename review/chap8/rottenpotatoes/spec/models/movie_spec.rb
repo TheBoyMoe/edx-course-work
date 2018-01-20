@@ -42,7 +42,10 @@ describe Movie do
 	end
 
 	describe "searching Tmdb by keyword" do
+
+		# happy path
 		it 'calls Tmdb with title keywords' do
+			# when we call '.find_in_tmdb' we expect it to call Tmdb::Movie.find with query
 			expect(Tmdb::Movie).to receive(:find).with('Inception')
 			Movie.find_in_tmdb('Inception')
 		end

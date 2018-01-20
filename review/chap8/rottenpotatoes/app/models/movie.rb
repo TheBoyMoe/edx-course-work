@@ -12,7 +12,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.find_in_tmdb(query)
-
+    Tmdb::Movie.find(query)
   end
 
 end

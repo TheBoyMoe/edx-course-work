@@ -11,6 +11,6 @@ saas-book-examples/chap8/rottenpotatoes-rails/.byebug_history
 saas-book-examples/chap8/rottenpotatoes-rails/.env
 saas-book-examples/review/chap8/rottenpotatoes/coverage/
 
-saas-book-examples/review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/coverage/
-saas-book-examples/review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/log/
-saas-book-examples/review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/tmp/
+review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/coverage/
+review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/log/
+review/hw-5-acceptance-unit-test-cycle/rottenpotatoes/tmp/
